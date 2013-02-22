@@ -1,47 +1,44 @@
-﻿namespace MarcoPolo.Resolve {
+﻿namespace MarcoPolo.Broadcast {
 	using System;
 	using System.Collections.Generic;
 	using Mono.Zeroconf;
 
 	public class Polo {
-		private static IList<ServiceBrowser> browsers;
+		private IList<RegisterService> Services { get; set; }
+		private ServiceFinder Finder { get; set; }
 
 		public Polo() {
-			browsers = new List<ServiceBrowser>();
+			Services = new List<RegisterService>();
+			Finder = new ServiceFinder();
 		}
 
-		public void Look(ServiceRegistry registry) {
-			var table = registry.Services;
+		public virtual void Start() {
+			SetupServices();
+			ServiceAction(svc => svc.Register());
+		}
 
-			foreach (var reg in table) {
-				var svc = reg.Key;
-				var handler = reg.Value;
-				var browser = CreateBrowser(svc, handler);
-				browsers.Add(browser);
+		private void SetupServices() {
+			var foundServices = Finder.GetServices();
+			if (foundServices == null)
+				return;
 
-				var action = new BrowseAction(browser, svc);
-				action.Browse();
+			foreach (var foundService in foundServices) {
+				var service = foundService.ToRegisterService();
+				Services.Add(service);
 			}
 		}
 
-		protected virtual ServiceBrowser CreateBrowser(Service info, Action<Service> handler ) {
-			var browser = new ServiceBrowser();
+		public virtual void Stop() {
+			ServiceAction(svc => svc.Dispose());
+			Services.Clear();
+		}
 
-			browser.ServiceAdded += (s, browseArgs) => {
-				var service = browseArgs.Service;
+		public virtual void ServiceAction(Action<RegisterService> action) {
+			if (Services == null || Services.Count == 0) return;
 
-				service.Resolved += (sender, resolveArgs) => {
-					var resolved = resolveArgs.Service;
-					var found = resolved.ToService();
-					if (handler == null) return;
-
-					handler.BeginInvoke(found, null, null);
-				};
-
-				service.Resolve();
-			};
-
-			return browser;
+			foreach (var registerService in Services) {
+				action(registerService);
+			}
 		}
 	}
 }

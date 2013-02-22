@@ -5,16 +5,15 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{E3C1C520-70FF-4209-BB18-871CA2B5EE59}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MarcoPolo.Broadcast</RootNamespace>
-    <AssemblyName>Marco</AssemblyName>
+    <RootNamespace>MarcoPolo.Resolve</RootNamespace>
+    <AssemblyName>MarcoPolo.Resolve</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +23,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -36,32 +34,17 @@
     <Reference Include="Mono.Zeroconf">
       <HintPath>..\..\..\lib\Mono.ZeroConf\Mono.Zeroconf.dll</HintPath>
     </Reference>
-    <Reference Include="Mono.Zeroconf.Providers.Bonjour">
-      <HintPath>..\..\..\lib\Mono.ZeroConf\Mono.Zeroconf.Providers.Bonjour.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="Topshelf">
-      <HintPath>..\packages\Topshelf.3.1.0\lib\net35\Topshelf.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BroadcastService.cs" />
+    <Compile Include="BrowseWorker.cs" />
+    <Compile Include="WorkerBuilder.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Marco.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="custom.mp">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="http.mp">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="rdp.mp">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="packages.config" />
+    <Compile Include="PoloRegistry.cs" />
+    <Compile Include="ServiceTable.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MarcoPolo\MarcoPolo.csproj">
@@ -69,7 +52,6 @@
       <Name>MarcoPolo</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

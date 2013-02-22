@@ -4,7 +4,7 @@
 	using MarcoPolo.Resolve;
 	class Program {
 		static void Main() {
-			var registry = new ServiceRegistry();
+			var registry = new PoloRegistry();
 
 			registry
 				.LookFor("_rdp._tcp", svc => {
@@ -18,9 +18,8 @@
 					Console.WriteLine("Opening URL: {0}", uri);
 					Process.Start(uri);
 				});
-			
-			var resolver = new Polo();
-			resolver.Look(registry);
+
+			new Marco().Look(registry);
 
 			Console.Write("Press any key to exit...");
 			Console.Read();

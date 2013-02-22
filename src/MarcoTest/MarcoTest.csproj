@@ -51,9 +51,9 @@
       <Project>{F7116F9F-8869-4DDD-8404-962F9A95BE4B}</Project>
       <Name>MarcoPolo</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Polo\Polo.csproj">
-      <Project>{72c804b6-2903-49e8-9347-32fbae30dd5e}</Project>
-      <Name>Polo</Name>
+    <ProjectReference Include="..\Marco\Marco.csproj">
+      <Project>{e3c1c520-70ff-4209-bb18-871ca2b5ee59}</Project>
+      <Name>Marco</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

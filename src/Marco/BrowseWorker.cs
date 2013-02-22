@@ -2,11 +2,11 @@
 	using System.Threading;
 	using Mono.Zeroconf;
 
-	public class BrowseAction {
+	public class BrowseWorker {
 		public ServiceBrowser Browser { get; set; }
 		public Service Service { get; set; }
 
-		public BrowseAction(ServiceBrowser browser, Service service) {
+		public BrowseWorker(ServiceBrowser browser, Service service) {
 			Browser = browser;
 			Service = service;
 		}
